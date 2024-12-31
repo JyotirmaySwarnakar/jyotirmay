@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jyotirmay Swarnakar</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3436;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2d3436;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #0984e3;
+        }
+
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #2d3436;
+            cursor: pointer;
+        }
+
+        /* Hero Section with Updated Profile Container */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding-top: 80px;
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+            color: white;
+        }
+
+        .profile-container {
+            position: relative;
+            width: 250px;
+            height: 300px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 2s linear;
+        }
+
+        .profile-image.rotating {
+            animation: rotate 20s linear infinite;
+        }
+
+        .play-button {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #0984e3;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            animation: blink 1s infinite;
+            z-index: 2;
+        }
+
+        .play-button i {
+            color: white;
+            font-size: 20px;
+        }
+
+        /* Audio Visualizer Bars */
+        .unique-container {
+            --uib-size: 35px;
+            --uib-color: white;
+            --uib-speed: 1s;
+            --uib-stroke: 3.5px;
+            display: flex;
+            visibility: hidden;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: var(--uib-size);
+            height: calc(var(--uib-size) * 0.9);
+            margin: 0;
+        }
+
+        .unique-bar {
+            width: var(--uib-stroke);
+            height: 100%;
+            background-color: var(--uib-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .unique-bar:nth-child(1) {
+            animation: unique-grow var(--uib-speed) ease-in-out calc(var(--uib-speed) * -0.45) infinite;
+        }
+
+        .unique-bar:nth-child(2) {
+            animation: unique-grow var(--uib-speed) ease-in-out calc(var(--uib-speed) * -0.3) infinite;
+        }
+
+        .unique-bar:nth-child(3) {
+            animation: unique-grow var(--uib-speed) ease-in-out calc(var(--uib-speed) * -0.15) infinite;
+        }
+
+        .unique-bar:nth-child(4) {
+            animation: unique-grow var(--uib-speed) ease-in-out infinite;
+        }
+
+        @keyframes unique-grow {
+            0%, 100% { transform: scaleY(0.3); }
+            50% { transform: scaleY(1); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+         /* Skills Section */
+         .skills {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #2d3436;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .skill-card i {
+            font-size: 40px;
+            color: #0984e3;
+            margin-bottom: 20px;
+        }
+
+        .skill-item {
+            margin: 15px 0;
+        }
+
+        .skill-bar {
+            width: 100%;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin: 10px 0;
+            height: 10px;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: #0984e3;
+            border-radius: 10px;
+            transition: width 10s ease-in-out;
+            position: relative;
+        }
+
+        .skill-percentage {
+            position: absolute;
+            right: -25px;
+            top: -25px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 100px 20px;
+            background: #f8f9fa;
+        }
+
+        .portfolio-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .portfolio-thumbnail {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .portfolio-info {
+            padding: 20px;
+        }
+
+        .portfolio-info h3 {
+            margin-bottom: 10px;
+        }
+
+        .visit-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #0984e3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            transition: background 0.3s ease;
+        }
+
+        .visit-btn:hover {
+            background: #074e83;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 20px;
+            background: linear-gradient(45deg, #0984e3, #74b9ff);
+            color: white;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2d3436;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .submit-btn {
+            background: #0984e3;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #074e83;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3436;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 24px;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #0984e3;
+        }
+
+        /* Animations */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 10px 0;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .profile-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .skills-grid, .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 20px;
+            }
+        }
+        .blog {
+    padding: 100px 20px;
+    background: #ffffff;
+}
+
+.blog-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.blog-item {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.blog-item:hover {
+    transform: translateY(-10px);
+}
+
+.blog-thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.blog-info {
+    padding: 20px;
+}
+
+.blog-info h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #2d3436;
+}
+
+.blog-info p {
+    color: #636e72;
+    margin-bottom: 15px;
+    display: -webkit-box; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.blog-date {
+    font-size: 0.9rem;
+    color: #0984e3;
+    margin-bottom: 10px;
+}
+
+.read-more-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #0984e3;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.read-more-btn:hover {
+    background: #074e83;
+}
+
+.loading-spinner {
+    text-align: center;
+    padding: 40px;
+    grid-column: 1 / -1;
+}
+
+.loading-spinner i {
+    font-size: 40px;
+    color: #0984e3;
+}
+
+@media (max-width: 768px) {
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+        /* Responsive Design Updates */
+        @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 10px 0;
+                text-align: center;
+            }
+
+            .profile-container {
+                width: 200px;
+                height: 250px;
+            }
+
+            .profile-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .unique-container {
+                --uib-size: 30px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .skills-grid, .portfolio-grid, .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Jyotirmay</div>
+            <button class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#skills">Skills</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#Blogs">Blogs</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="profile-container">
+            <img src="assets/images/myimage.jpg" alt="Profile" class="profile-image">
+            <button class="play-button">
+                <i class="fas fa-play"></i>
+            </button>
+            <div class="unique-container">
+                <div class="unique-bar"></div>
+                <div class="unique-bar"></div>
+                <div class="unique-bar"></div>
+                <div class="unique-bar"></div>
+            </div>
+        </div>
+        <h1>Jyotirmay Swarnakar</h1>
+        <p>Software Developer | Aspiring DBA</p>
+    </section>
+
+    <section id="skills" class="skills">
+        <h2 class="section-title">Skills & Experience</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fas fa-code"></i>
+                <h3>Web Development</h3>
+                <div class="skill-item">
+                    <p>HTML</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 95%">
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <p>CSS</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 85%">
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <p>JavaScript</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 80%">
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-database"></i>
+                <h3>Backend Development</h3>
+                <div class="skill-item">
+                    <p>Postgre SQL</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 85%">
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <p>MySQL</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 80%">
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <p>Python</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 70%">
+                            <span class="skill-percentage">70%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Mobile Development</h3>
+                <div class="skill-item">
+                    <p>GD script</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 65%">
+                            <span class="skill-percentage">65%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <p>Flutter</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 60%">
+                            <span class="skill-percentage">60%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio">
+        <h2 class="section-title">My Portfolio</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="assets/images/tinbox.png" alt="Project 1" class="portfolio-thumbnail">
+                <div class="portfolio-info">
+                    <h3>T-inbox</h3>
+                    <p>Free and easiest way to generate temporary email address and receive mails to keep your mail address spam free</p>
+                    <a href="https://bit.ly/T-inbox" target="_blank" class="visit-btn">Visit Project</a>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="assets/images/img.png" alt="Project 2" class="portfolio-thumbnail">
+                <div class="portfolio-info"><h3>IMGfy</h3>
+                    <p>Now you can change image formats or compress them at one place that too for free and easily.</p>
+                    <a href="https://bit.ly/IMGfy" target="_blank" class="visit-btn">Visit Project</a>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="assets/images/transcode.png" alt="Project 3" class="portfolio-thumbnail">
+                <div class="portfolio-info">
+                    <h3>Transcode</h3>
+                    <p>Now share information secretely in the form of QR, Morse code, Encrypted text for free</p>
+                    <a href="https://bit.ly/Transcode" target="_blank" class="visit-btn">Visit Project</a>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="assets/images/detune.png" alt="Project 3" class="portfolio-thumbnail">
+                <div class="portfolio-info">
+                    <h3>Detune</h3>
+                    <p>Extract audio from video and convert it to mp3 or remove audio from video for free</p>
+                    <a href="https://bit.ly/Deetune" target="_blank" class="visit-btn">Visit Project</a>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="assets/images/Write.png" alt="Project 3" class="portfolio-thumbnail">
+                <div class="portfolio-info">
+                    <h3>Write Text Editor</h3>
+                    <p>Free Text Editor with extra features like words counter and random text generator.</p>
+                    <a href="https://jyotirmayswarnakar.github.io/write/" target="_blank" class="visit-btn">Visit Project</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="Blogs"  class="blog">
+        <h2 class="section-title">Latest Blog Posts</h2>
+        <div class="blog-grid" id="blogGrid">
+            <!-- Blog posts will be loaded here dynamically -->
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 class="section-title">Contact Me</h2>
+        <div class="contact-container">
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Jyotirmay Swarnakar.</p>
+        <div class="social-links">
+            <a href="https://github.com/JyotirmaySwarnakar", target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/jyotirmay-swarnakar-4769732a3", target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://jyotirmayswarnakar.blogspot.com/", target="_blank"><i class="fab fa-blogger"></i></a>
+            <a href="https://www.reddit.com/r/SwarnSoftware/", target="_blank"><i class="fab fa-reddit"></i></a>
+            <a href="https://t.me/jyotirmaykachannel", target="_blank"><i class="fab fa-telegram"></i></a>
+            <a href="https://discordapp.com/users/JyotirmaySwarnakar", target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="https://www.quora.com/profile/Jyotirmay-Swarnakar-1", target="_blank"><i class="fab fa-quora"></i></a>
+            <a href=" https://www.fiverr.com/jyotirmay_swarn", target="_blank"><i class="fa-solid fa-f"></i></a>
+            
+        </div>
+    </footer>
+
+    <script>
+        // Audio Player functionality
+        const profileImage = document.querySelector('.profile-image');
+        const playButton = document.querySelector('.play-button');
+        const audio = new Audio('assets/audio/song.mp3');
+        const contentContainer = document.querySelector('.unique-container');
+        let isPlaying = false;
+
+        playButton.addEventListener('click', () => {
+            if (!isPlaying) {
+                // Start playing
+                audio.play();
+                profileImage.classList.add('rotating');
+                playButton.innerHTML = '<i class="fas fa-pause"></i>';
+                contentContainer.style.visibility = 'visible';
+            } else {
+                // Pause playing
+                audio.pause();
+                profileImage.classList.remove('rotating');
+                playButton.innerHTML = '<i class="fas fa-play"></i>';
+                contentContainer.style.visibility = 'hidden';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Audio ended event
+        audio.addEventListener('ended', () => {
+            isPlaying = false;
+            profileImage.classList.remove('rotating');
+            playButton.innerHTML = '<i class="fas fa-play"></i>';
+            contentContainer.style.visibility = 'hidden';
+        });
+
+        // Mobile Menu Functionality
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuButton.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Your existing scripts for smooth scrolling, skill animations, etc.
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                // Close mobile menu after clicking a link
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Animate skill bars on scroll
+        const skillBars = document.querySelectorAll('.skill-progress');
+        const animateSkills = () => {
+            skillBars.forEach(bar => {
+                const percentage = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = percentage;
+                }, 200);
+            });
+        };
+
+        // Intersection Observer for skill bars animation
+        const skillsSection = document.querySelector('.skills');
+        const skillsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkills();
+                    skillsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        skillsObserver.observe(skillsSection);
+
+        // Replace the existing form submission handler with this:
+const contactForm = document.querySelector('.contact-form');
+contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    // Basic form validation
+    if (!name || !email || !message) {
+        alert('Please fill in all fields');
+        return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address');
+        return;
+    }
+
+    // Format the email body
+    const emailBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+    
+    // Create mailto link
+    const mailtoLink = `mailto:jyotirmayswarnakar79@gmail.com?subject=Portfolio Contact Form&body=${emailBody}`;
+    
+    // Open default mail client
+    window.location.href = mailtoLink;
+    
+    // Reset form
+    contactForm.reset();
+});
+
+        // Audio ended event
+        audio.addEventListener('ended', () => {
+            isPlaying = false;
+            profileImage.classList.remove('rotating');
+            playButton.innerHTML = '<i class="fas fa-play"></i>';
+        });
+
+        // Preload image and audio
+        window.addEventListener('load', () => {
+            audio.preload = 'auto';
+            document.body.classList.remove('loading');
+        });
+    </script>
+    <script>
+        // Blogger API configuration
+        const BLOG_ID = '7980532915792792841'; // Replace with your Blogger ID
+        const API_KEY = 'AIzaSyB4oXYnsuREQYmjYKok7DsJMNnxmnrhHVY'; // Replace with your API key
+        
+        // Function to fetch blog posts
+        async function fetchBlogPosts() {
+            try {
+                const response = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${API_KEY}&maxResults=3&orderBy=published`);
+                const data = await response.json();
+                return data.items;
+            } catch (error) {
+                console.error('Error fetching blog posts:', error);
+                return [];
+            }
+        }
+        
+        // Function to extract first image from post content
+        function getFirstImage(content) {
+            const div = document.createElement('div');
+            div.innerHTML = content;
+            const img = div.querySelector('img');
+            return img ? img.src : '/assets/images/blog-placeholder.jpg'; // Use a placeholder if no image found
+        }
+        
+        // Function to format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+        
+        // Function to create blog post HTML
+        function createBlogPostElement(post) {
+            const thumbnail = getFirstImage(post.content);
+            return `
+                <div class="blog-item">
+                    <img src="${thumbnail}" alt="${post.title}" class="blog-thumbnail">
+                    <div class="blog-info">
+                        <div class="blog-date">${formatDate(post.published)}</div>
+                        <h3>${post.title}</h3>
+                        <p>${post.content.replace(/<[^>]*>/g, '').slice(0, 150)}...</p>
+                        <a href="${post.url}" target="_blank" class="read-more-btn">Read More</a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Function to load blog posts
+        async function loadBlogPosts() {
+            const blogGrid = document.getElementById('blogGrid');
+            blogGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>';
+        
+            const posts = await fetchBlogPosts();
+            
+            if (posts.length > 0) {
+                blogGrid.innerHTML = posts.map(post => createBlogPostElement(post)).join('');
+            } else {
+                blogGrid.innerHTML = '<p>No blog posts found.</p>';
+            }
+        }
+        
+        // Load blog posts when the page loads
+        document.addEventListener('DOMContentLoaded', loadBlogPosts);
+    </script>
+</body>
+</html>

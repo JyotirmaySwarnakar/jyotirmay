@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Detune</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%235048e5' d='M511.3 32.3c.5-7.9-2.4-15.4-8-21.1C497.7 5.5 490.1 2.5 482.3 3L199.7 28.6C185.6 30 174.6 41.6 174.6 55.8v264.7c-6.7-1.5-13.6-2.2-20.5-2.2-25.1 0-49.2 9.7-66.8 27.3-17.6 17.6-27.3 41.7-27.3 66.8s9.7 49.2 27.3 66.8c17.6 17.6 41.7 27.3 66.8 27.3s49.2-9.7 66.8-27.3c17.6-17.6 27.3-41.7 27.3-66.8V178.7l236.6-23.5v162.8c-6.7-1.5-13.6-2.2-20.5-2.2-25.1 0-49.2 9.7-66.8 27.3-17.6 17.6-27.3 41.7-27.3 66.8s9.7 49.2 27.3 66.8c17.6 17.6 41.7 27.3 66.8 27.3s49.2-9.7 66.8-27.3c17.6-17.6 27.3-41.7 27.3-66.8V32.3z'/%3E%3C/svg%3E">
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
+            }
+    
+            :root {
+                --primary: #5048e5;
+                --secondary: #818cf8;
+                --dark: #1f2937;
+                --light: #f3f4f6;
+            }
+    
+            body {
+                background-color: var(--light);
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+    
+            header {
+                background-color: white;
+                padding: 1rem;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+    
+            .header-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+    
+            .logo {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: var(--primary);
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                transition: transform 0.3s ease;
+            }
+    
+            .logo:hover {
+                transform: scale(1.05);
+            }
+    
+            main {
+                flex: 1;
+                padding: 2rem;
+                max-width: 1200px;
+                margin: 0 auto;
+                width: 100%;
+            }
+    
+            .container {
+                background-color: white;
+                padding: 2rem;
+                border-radius: 1rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                animation: fadeIn 0.5s ease;
+            }
+    
+            .upload-section {
+                text-align: center;
+                padding: 3rem 2rem;
+                border: 2px dashed var(--secondary);
+                border-radius: 1rem;
+                margin-bottom: 2rem;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                position: relative;
+            }
+    
+            .upload-section:hover {
+                border-color: var(--primary);
+                background-color: rgba(79, 70, 229, 0.05);
+            }
+    
+            .upload-section i {
+                font-size: 3rem;
+                color: var(--primary);
+                margin-bottom: 1rem;
+            }
+    
+            .upload-section p {
+                color: var(--dark);
+                margin: 0.5rem 0;
+            }
+    
+            .upload-section input[type="file"] {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+            }
+    
+            .video-container {
+                display: none;
+                margin: 2rem 0;
+                animation: slideDown 0.5s ease;
+            }
+    
+            video {
+                width: 100%;
+                max-height: 400px;
+                border-radius: 0.5rem;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                background-color: #000;
+            }
+    
+            .controls {
+                display: flex;
+                gap: 1rem;
+                margin: 2rem 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+    
+            .control-group {
+                position: relative;
+                display: inline-block;
+            }
+    
+            button {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem 1.5rem;
+                border: none;
+                border-radius: 0.5rem;
+                background-color: var(--primary);
+                color: white;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: 500;
+            }
+    
+            button:hover:not(:disabled) {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+            }
+    
+            button:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
+    
+            #status {
+                margin: 1rem 0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                text-align: center;
+                display: none;
+            }
+    
+            .success {
+                background-color: #dcfce7;
+                color: #166534;
+            }
+    
+            .error {
+                background-color: #fee2e2;
+                color: #991b1b;
+            }
+    
+            .progress-container {
+                display: none;
+                margin: 2rem 0;
+                padding: 1rem;
+                background: white;
+                border-radius: 0.5rem;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+    
+            .progress-bar {
+                height: 4px;
+                background: #eee;
+                border-radius: 2px;
+                overflow: hidden;
+                position: relative;
+                margin-bottom: 0.5rem;
+            }
+    
+            .progress-bar::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 0%;
+                background: var(--primary);
+                transition: width 0.3s ease;
+            }
+    
+            .progress-text {
+                font-size: 0.9rem;
+                color: var(--dark);
+                margin-bottom: 0.25rem;
+            }
+    
+            .estimated-time {
+                font-size: 0.8rem;
+                color: #666;
+            }
+    
+            footer {
+                background-color: white;
+                padding: 1rem;
+                text-align: center;
+                box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+                margin-top: 2rem;
+            }
+    
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+    
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+    
+            @media (max-width: 768px) {
+                main {
+                    padding: 1rem;
+                }
+    
+                .container {
+                    padding: 1rem;
+                }
+    
+                .controls {
+                    flex-direction: column;
+                }
+    
+                .control-group {
+                    width: 100%;
+                }
+    
+                button {
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-music"></i>
+                    Detune
+                </a>
+                <nav>
+                    <i class="fas fa-question-circle" style="color: var(--primary); cursor: pointer;" title="Help"></i>
+                </nav>
+            </div>
+        </header>
+    
+        <main>
+            <div class="container">
+                <div class="upload-section" id="uploadSection">
+                    <input type="file" id="videoInput" accept="video/*">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h2>Upload Your Video</h2>
+                    <p>Click or drag your video file here</p>
+                    <p class="text-sm" style="color: #666;">Supported formats: MP4, WebM, OGG</p>
+                </div>
+    
+                <div class="video-container" id="videoContainer">
+                    <video id="videoPlayer" controls></video>
+                </div>
+    
+                <div class="controls">
+                    <div class="control-group">
+                        <button id="extractAudio" disabled>
+                            <i class="fas fa-volume-up"></i>
+                            <span class="button-text">Extract Audio (MP3)</span>
+                        </button>
+                    </div>
+                    
+                    <div class="control-group">
+                        <button id="removeAudio" disabled>
+                            <i class="fas fa-volume-mute"></i>
+                            <span class="button-text">Remove Audio</span>
+                        </button>
+                    </div>
+                </div>
+    
+                <div id="status"></div>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="progress-text" id="progressText">Processing: 0%</div>
+                    <div class="estimated-time" id="estimatedTime">Estimated time: calculating...</div>
+                </div>
+            </div>
+        </main>
+    
+        <footer>
+            <div class="footer-content">
+                | &copy; Detune 2024 | Developed by <a href="https://jyotirmayswarnakar.github.io/jyotirmay" class="creator-link" target="_blank">Jyotirmay Swarnakar</a>               
+            </div>
+        </footer>
+        <script>
+            // Get DOM elements
+const videoInput = document.getElementById('videoInput');
+const videoPlayer = document.getElementById('videoPlayer');
+const videoContainer = document.getElementById('videoContainer');
+const uploadSection = document.getElementById('uploadSection');
+const extractAudioBtn = document.getElementById('extractAudio');
+const removeAudioBtn = document.getElementById('removeAudio');
+const status = document.getElementById('status');
+const progressContainer = document.getElementById('progressContainer');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+const estimatedTime = document.getElementById('estimatedTime');
+
+// Add file info display
+const fileInfo = document.createElement('div');
+fileInfo.className = 'file-info';
+fileInfo.style.display = 'none';
+fileInfo.innerHTML = `
+    <div style="margin: 1rem 0; text-align: center;">
+        <span class="filename" style="font-weight: 500;"></span>
+    </div>
+`;
+uploadSection.appendChild(fileInfo);
+
+// Add result container
+const resultContainer = document.createElement('div');
+resultContainer.className = 'result-container';
+resultContainer.style.display = 'none';
+resultContainer.style.textAlign = 'center';
+resultContainer.style.marginTop = '1rem';
+resultContainer.innerHTML = `
+    <div class="processing-result" style="margin-bottom: 1rem; color: var(--dark);"></div>
+    <button class="download-btn" style="background-color: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer;">
+        <i class="fas fa-download" style="margin-right: 0.5rem;"></i>Download
+    </button>
+`;
+document.querySelector('.container').appendChild(resultContainer);
+
+let processedBlob = null;
+let processingStartTime = 0;
+
+// Helper Functions
+function showStatus(message, type) {
+    status.textContent = message;
+    status.className = type;
+    status.style.display = 'block';
+    setTimeout(() => {
+        status.style.display = 'none';
+    }, 5000);
+}
+
+function showLoading() {
+    progressContainer.style.display = 'block';
+    processingStartTime = Date.now();
+}
+
+function hideLoading() {
+    progressContainer.style.display = 'none';
+    const processingTime = ((Date.now() - processingStartTime) / 1000).toFixed(1);
+    const resultText = `Processing completed in ${processingTime} seconds`;
+    resultContainer.querySelector('.processing-result').textContent = resultText;
+    resultContainer.style.display = 'block';
+}
+
+// File handling functions
+function handleFile(file) {
+    if (file && file.type.startsWith('video/')) {
+        fileInfo.style.display = 'block';
+        fileInfo.querySelector('.filename').textContent = `Selected file: ${file.name}`;
+        
+        videoContainer.style.display = 'none';
+        resultContainer.style.display = 'none';
+        
+        extractAudioBtn.disabled = false;
+        removeAudioBtn.disabled = false;
+        status.style.display = 'none';
+        progressContainer.style.display = 'none';
+        
+        uploadSection.style.padding = '1rem';
+        const icon = uploadSection.querySelector('i');
+        const title = uploadSection.querySelector('h2');
+        const paragraphs = uploadSection.querySelectorAll('p:not(.filename)');
+        
+        if (icon) icon.style.fontSize = '1.5rem';
+        if (title) title.style.fontSize = '1rem';
+        paragraphs.forEach(p => p.style.display = 'none');
+    } else {
+        showStatus('Please select a valid video file.', 'error');
+    }
+}
+
+// Audio Processing Function
+function processAudio() {
+    try {
+        showLoading();
+        const file = videoInput.files[0];
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            try {
+                const arrayBuffer = e.target.result;
+                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                
+                const duration = audioBuffer.duration;
+                const channels = audioBuffer.numberOfChannels;
+                const offlineContext = new OfflineAudioContext(channels, audioBuffer.length, audioBuffer.sampleRate);
+                
+                const source = offlineContext.createBufferSource();
+                source.buffer = audioBuffer;
+                source.connect(offlineContext.destination);
+                
+                // Create an analyzer node for monitoring progress
+                const analyser = offlineContext.createAnalyser();
+                source.connect(analyser);
+                analyser.connect(offlineContext.destination);
+                
+                // Start the source before rendering
+                source.start(0);
+                
+                // Variables for progress tracking
+                let startTime = Date.now();
+                let isProcessing = true;
+                let currentTime = 0;
+                
+                // Progress update function
+                const updateProgress = () => {
+                    if (!isProcessing) return;
+                    
+                    currentTime = (Date.now() - startTime) / 1000;
+                    const progress = Math.min((currentTime / duration) * 100, 99.9);
+                    const remaining = Math.max(duration - currentTime, 0);
+                    
+                    progressBar.style.width = `${progress}%`;
+                    progressText.textContent = `Processing: ${Math.round(progress)}%`;
+                    estimatedTime.textContent = `Estimated time: ${Math.round(remaining)}s remaining`;
+                    
+                    if (isProcessing) {
+                        requestAnimationFrame(updateProgress);
+                    }
+                };
+                
+                updateProgress();
+                
+                const renderedBuffer = await offlineContext.startRendering();
+                
+                const mediaStreamDest = audioContext.createMediaStreamDestination();
+                const finalSource = audioContext.createBufferSource();
+                finalSource.buffer = renderedBuffer;
+                finalSource.connect(mediaStreamDest);
+                
+                const mediaRecorder = new MediaRecorder(mediaStreamDest.stream, {
+                    mimeType: 'audio/webm',
+                    bitsPerSecond: 128000
+                });
+                
+                const chunks = [];
+                
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) {
+                        chunks.push(e.data);
+                    }
+                };
+                
+                mediaRecorder.onstop = () => {
+                    isProcessing = false;
+                    processedBlob = new Blob(chunks, { type: 'audio/webm' });
+                    
+                    progressBar.style.width = '100%';
+                    progressText.textContent = 'Processing: 100%';
+                    estimatedTime.textContent = 'Completed!';
+                    
+                    setTimeout(() => {
+                        hideLoading();
+                        const downloadBtn = resultContainer.querySelector('.download-btn');
+                        downloadBtn.setAttribute('data-format', 'mp3');
+                    }, 500);
+                };
+                
+                mediaRecorder.start(100);
+                finalSource.start(0);
+                
+                finalSource.onended = () => {
+                    mediaRecorder.stop();
+                };
+                
+            } catch (error) {
+                isProcessing = false;
+                hideLoading();
+                showStatus(`Audio processing error: ${error.message}`, 'error');
+                console.error('Audio processing error:', error);
+            }
+        };
+        
+        reader.onerror = (error) => {
+            hideLoading();
+            showStatus(`File reading error: ${error.message}`, 'error');
+            console.error('File reading error:', error);
+        };
+        
+        reader.readAsArrayBuffer(file);
+        
+    } catch (error) {
+        hideLoading();
+        showStatus(`Error initializing audio processing: ${error.message}`, 'error');
+        console.error('Error initializing audio processing:', error);
+    }
+}
+
+// Video Processing Function
+function processVideo() {
+    try {
+        showLoading();
+        const file = videoInput.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = async function(e) {
+            try {
+                const blob = new Blob([e.target.result], { type: file.type });
+                const url = URL.createObjectURL(blob);
+                
+                const hiddenVideo = document.createElement('video');
+                hiddenVideo.style.display = 'none';
+                document.body.appendChild(hiddenVideo);
+                
+                hiddenVideo.onloadedmetadata = () => {
+                    const duration = hiddenVideo.duration;
+                    const mediaStream = hiddenVideo.captureStream();
+                    const videoTrack = mediaStream.getVideoTracks()[0];
+                    const newStream = new MediaStream([videoTrack]);
+                    
+                    const mediaRecorder = new MediaRecorder(newStream, {
+                        mimeType: 'video/webm'
+                    });
+                    
+                    const chunks = [];
+                    
+                    mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+                    
+                    mediaRecorder.onstop = () => {
+                        processedBlob = new Blob(chunks, { type: 'video/webm' });
+                        URL.revokeObjectURL(url);
+                        document.body.removeChild(hiddenVideo);
+                        hideLoading();
+                    };
+                    
+                    hiddenVideo.onended = () => mediaRecorder.stop();
+                    
+                    mediaRecorder.start();
+                    hiddenVideo.play();
+                    
+                    const startTime = Date.now();
+                    const updateProgress = () => {
+                        const elapsed = (Date.now() - startTime) / 1000;
+                        const progress = Math.min((elapsed / duration) * 100, 100);
+                        const remaining = Math.max(duration - elapsed, 0);
+                        
+                        progressBar.style.setProperty('width', `${progress}%`);
+                        progressText.textContent = `Processing: ${Math.round(progress)}%`;
+                        estimatedTime.textContent = `Estimated time: ${Math.round(remaining)}s remaining`;
+                        
+                        if (progress < 100) {
+                            requestAnimationFrame(updateProgress);
+                        }
+                    };
+                    updateProgress();
+                };
+                
+                hiddenVideo.src = url;
+            } catch (error) {
+                throw error;
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    } catch (error) {
+        console.error(error);
+        showStatus('Error removing audio: ' + error.message, 'error');
+        hideLoading();
+    }
+}
+
+// Event Listeners
+videoInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    handleFile(file);
+});
+
+// Download button handler
+resultContainer.querySelector('.download-btn').addEventListener('click', () => {
+    if (processedBlob) {
+        const format = resultContainer.querySelector('.download-btn').getAttribute('data-format') || 'webm';
+        const url = URL.createObjectURL(processedBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `processed_audio.${format}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        resultContainer.style.display = 'none';
+        processedBlob = null;
+    }
+});
+
+// Button Event Listeners
+extractAudioBtn.addEventListener('click', () => {
+    processAudio();
+});
+
+removeAudioBtn.addEventListener('click', () => {
+    processVideo();
+});
+
+// Help tooltip
+const helpIcon = document.querySelector('.fa-question-circle');
+helpIcon.addEventListener('click', () => {
+    alert('Welcome to Detune!\n\n' +
+          '1. Upload your video by clicking or dragging a file\n' +
+          '2. Use "Extract Audio" to save audio as MP3\n' +
+          '3. Use "Remove Audio" to save video without sound\n\n' +
+          'Supported formats: MP4, WebM, OGG');
+});
+
+// Browser compatibility check
+document.addEventListener('DOMContentLoaded', () => {
+    if (!window.MediaRecorder || !window.AudioContext) {
+        showStatus('Your browser does not support all required features. Please use a modern browser like Chrome or Firefox.', 'error');
+        extractAudioBtn.disabled = true;
+        removeAudioBtn.disabled = true;
+    }
+});
+
+// Cleanup handlers
+window.addEventListener('beforeunload', () => {
+    if (videoPlayer.src) {
+        URL.revokeObjectURL(videoPlayer.src);
+    }
+    document.querySelectorAll('a[href^="blob:"]').forEach(link => {
+        URL.revokeObjectURL(link.href);
+    });
+});
+
+// Navigation warning
+window.onbeforeunload = (e) => {
+    if (progressContainer.style.display === 'block') {
+        e.preventDefault();
+        e.returnValue = 'Processing in progress. Are you sure you want to leave?';
+        return e.returnValue;
+    }
+};
+
+// Global error handler
+window.addEventListener('error', (e) => {
+    console.error('Error:', e.error);
+    hideLoading();
+    showStatus('An error occurred. Please try again.', 'error');
+});
+
+        </script>
+        
+    </body>
+</html>

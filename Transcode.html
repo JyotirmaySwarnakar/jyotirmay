@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/image/transcodefavicon.svg">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #ecf0f1;
+            --text-color: #333;
+            --accent-color: #e74c3c;
+            --transparent-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2.5rem;
+        }
+
+        .navigation-bar {
+            display: flex;
+            justify-content: center;
+            background-color: var(--secondary-color);
+            padding: 10px;
+        }
+
+        .nav-button {
+            margin: 0 15px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button i {
+            margin-right: 5px;
+        }
+
+        .nav-button:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .content-wrapper {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f0f0f0"/></svg>') repeat;
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .section-header {
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #optionContainer {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        select {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            margin: 8px auto;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        #inputContainer, #resultContainer {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input, button {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        footer span {
+            color: var(--accent-color);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        footer span:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        #resultContainer img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            .glass-container {
+                padding: 20px;
+                width: 95%;
+            }
+
+            .navigation-bar {
+                flex-wrap: wrap;
+            }
+
+            .nav-button {
+                margin: 5px 10px;
+            }
+
+            select, input, button {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .section-header {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-icon">➰</div>
+        <div class="logo">Transcode</div>
+    </header>
+
+    <div class="navigation-bar">
+        <div class="nav-button" data-section="qr">
+            <i class="fas fa-qrcode"></i> QR Code
+        </div>
+        <div class="nav-button" data-section="morse">
+            <i class="fas fa-dot-circle"></i> Morse Code
+        </div>
+        <div class="nav-button" data-section="encrypted">
+            <i class="fas fa-lock"></i> Encrypted Code
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="glass-container">
+            <div class="content-container">
+                <div id="sectionHeader" class="section-header">
+                    <i class="fas fa-qrcode"></i>
+                    <h2>QR Code</h2>
+                </div>
+
+                <div id="optionContainer"></div>
+                <div id="inputContainer"></div>
+                <div id="resultContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2024 Transcode | All rights reserved |
+        Developed by <span onclick="window.open('https://Jyotirmayswarnakar.github.io/jyotirmay', '_blank')">Jyotirmay Swarnakar</span>
+         
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+    <script>
+         const MORSE_CODE_MAP = {
+            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 
+            'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---',
+            'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 
+            'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
+            'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 
+            'Z': '--..', '0': '-----', '1': '.----', '2': '..---', 
+            '3': '...--', '4': '....-', '5': '.....', '6': '-....', 
+            '7': '--...', '8': '---..', '9': '----.', ' ': '/'
+        };
+
+        const REVERSE_MORSE_CODE_MAP = Object.fromEntries(
+            Object.entries(MORSE_CODE_MAP).map(([k, v]) => [v, k])
+        );
+
+        // Navigation Logic
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.getAttribute('data-section');
+                updateSection(section);
+            });
+        });
+
+        // Initial setup - load QR section by default
+        window.onload = function() {
+            updateSection('qr');
+        };
+
+        function updateSection(section) {
+            const sectionHeader = document.getElementById('sectionHeader');
+            const optionContainer = document.getElementById('optionContainer');
+            const inputContainer = document.getElementById('inputContainer');
+            const resultContainer = document.getElementById('resultContainer');
+
+            // Reset containers
+            optionContainer.innerHTML = '';
+            inputContainer.innerHTML = '';
+            resultContainer.innerHTML = '';
+
+            switch(section) {
+                case 'qr':
+                    sectionHeader.innerHTML = '<i class="fas fa-qrcode"></i><h2>QR Code</h2>';
+                    // Show QR input directly without option selector
+                    inputContainer.innerHTML = `
+                        <input type="text" id="inputText" placeholder="Enter text to generate QR Code">
+                        <button onclick="generateQR()">
+                            <i class="fas fa-qrcode"></i> Generate QR Code
+                        </button>
+                    `;
+                    break;
+                case 'morse':
+                    sectionHeader.innerHTML = '<i class="fas fa-dot-circle"></i><h2>Morse Code</h2>';
+                    optionContainer.innerHTML = `
+                        <select id="functionSelect" onchange="handleFunction()">
+                            <option value="none" selected disabled>Select Morse Code Function</option>
+                            <option value="generateMorse">Generate Morse Code</option>
+                            <option value="readMorse">Read Morse Code</option>
+                        </select>
+                    `;
+                    break;
+                case 'encrypted':
+                    sectionHeader.innerHTML = '<i class="fas fa-lock"></i><h2>Encrypted Code</h2>';
+                    optionContainer.innerHTML = `
+                        <select id="functionSelect" onchange="handleFunction()">
+                            <option value="none" selected disabled>Select Encryption Function</option>
+                            <option value="encrypt">Encrypt Text</option>
+                            <option value="decrypt">Decrypt Text</option>
+                        </select>
+                    `;
+                    break;
+            }
+        }
+
+        function handleFunction() {
+            const selectedFunction = document.getElementById('functionSelect').value;
+            const inputContainer = document.getElementById('inputContainer');
+            const resultContainer = document.getElementById('resultContainer');
+
+            // Reset containers
+            inputContainer.innerHTML = '';
+            resultContainer.innerHTML = '';
+
+            switch(selectedFunction) {
+                case 'generateMorse':
+                    inputContainer.innerHTML = `
+                        <input type="text" id="inputText" placeholder="Enter text to convert to Morse Code">
+                        <button onclick="generateMorse()">
+                            <i class="fas fa-dot-circle"></i> Generate Morse Code
+                        </button>
+                    `;
+                    break;
+                case 'readMorse':
+                    inputContainer.innerHTML = `
+                        <input type="text" id="inputText" placeholder="Enter Morse Code (. - /)">
+                        <button onclick="readMorse()">
+                            <i class="fas fa-language"></i> Decode Morse Code
+                        </button>
+                    `;
+                    break;
+                case 'encrypt':
+                    inputContainer.innerHTML = `
+                        <input type="text" id="inputText" placeholder="Enter text to encrypt">
+                        <button onclick="encrypt()">
+                            <i class="fas fa-lock"></i> Encrypt
+                        </button>
+                    `;
+                    break;
+                case 'decrypt':
+                    inputContainer.innerHTML = `
+                        <input type="text" id="inputText" placeholder="Enter encrypted text">
+                        <button onclick="decrypt()">
+                            <i class="fas fa-unlock"></i> Decrypt
+                        </button>
+                    `;
+                    break;
+            }
+        }
+
+        function generateQR() {
+            const inputText = document.getElementById("inputText").value;
+            const resultContainer = document.getElementById("resultContainer");
+
+            if (!inputText) {
+                alert("Please enter text to generate QR code");
+                return;
+            }
+
+            const qr = qrcode(0, 'M');
+            qr.addData(inputText);
+            qr.make();
+
+            const qrCodeImg = document.createElement('img');
+            qrCodeImg.src = qr.createDataURL(10);
+            qrCodeImg.id = 'qrCodeImg';
+
+            const qrCodeDiv = document.createElement('div');
+            const downloadButton = document.createElement('button');
+            downloadButton.innerHTML = '<i class="fas fa-download"></i> Download QR Code';
+            downloadButton.onclick = function() {
+                const link = document.createElement('a');
+                link.download = 'qr_code.png';
+                link.href = qrCodeImg.src;
+                link.click();
+            };
+
+            qrCodeDiv.appendChild(qrCodeImg);
+            qrCodeDiv.appendChild(downloadButton);
+
+            resultContainer.innerHTML = '';
+            resultContainer.appendChild(qrCodeDiv);
+        }
+
+        function generateMorse() {
+            const inputText = document.getElementById("inputText").value.toUpperCase();
+            const resultContainer = document.getElementById("resultContainer");
+            
+            const morseCode = inputText.split('').map(char => 
+                MORSE_CODE_MAP[char] || ''
+            ).filter(code => code).join(' ');
+
+            resultContainer.innerHTML = `
+                <strong><i class="fas fa-dot-circle"></i> Morse Code:</strong>
+                <p>${morseCode}</p>
+                <button onclick="copyToClipboard(this)">
+                    <i class="fas fa-copy"></i> Copy Morse Code
+                </button>
+            `;
+        }
+
+        function readMorse() {
+            const inputText = document.getElementById("inputText").value.trim();
+            const resultContainer = document.getElementById("resultContainer");
+            
+            const decoded = inputText.split(' ').map(code => 
+                REVERSE_MORSE_CODE_MAP[code] || ''
+            ).filter(char => char).join('');
+
+            resultContainer.innerHTML = `
+                <strong><i class="fas fa-language"></i> Decoded Text:</strong>
+                <p>${decoded}</p>
+                <button onclick="copyToClipboard(this)">
+                    <i class="fas fa-copy"></i> Copy Decoded Text
+                </button>
+            `;
+        }
+        
+        function encrypt() {
+            const inputText = document.getElementById("inputText").value;
+            const resultContainer = document.getElementById("resultContainer");
+            const shift = 3;
+            
+            const encrypted = inputText.split('').map(char => {
+                if (char.match(/[a-z]/i)) {
+                    const base = char.toLowerCase() === char ? 'a'.charCodeAt(0) : 'A'.charCodeAt(0);
+                    return String.fromCharCode(
+                        ((char.charCodeAt(0) - base + shift + 26) % 26) + base
+                    );
+                }
+                return char;
+            }).join('');
+
+            resultContainer.innerHTML = `
+                <strong><i class="fas fa-lock"></i> Encrypted Text:</strong>
+                <p>${encrypted}</p>
+                <button onclick="copyToClipboard(this)">
+                    <i class="fas fa-copy"></i> Copy Encrypted Text
+                </button>
+            `;
+        }
+
+        function decrypt() {
+            const inputText = document.getElementById("inputText").value;
+            const resultContainer = document.getElementById("resultContainer");
+            const shift = 3;
+            
+            const decrypted = inputText.split('').map(char => {
+                if (char.match(/[a-z]/i)) {
+                    const base = char.toLowerCase() === char ? 'a'.charCodeAt(0) : 'A'.charCodeAt(0);
+                    return String.fromCharCode(
+                        ((char.charCodeAt(0) - base - shift + 26) % 26) + base
+                    );
+                }
+                return char;
+            }).join('');
+
+            resultContainer.innerHTML = `
+                <strong><i class="fas fa-unlock"></i> Decrypted Text:</strong>
+                <p>${decrypted}</p>
+                <button onclick="copyToClipboard(this)">
+                    <i class="fas fa-copy"></i> Copy Decrypted Text
+                </button>
+            `;
+        }
+
+        function copyToClipboard(button) {
+            const textToCopy = button.previousElementSibling.textContent;
+            
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = textToCopy;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+            
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-copy"></i> Copy';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

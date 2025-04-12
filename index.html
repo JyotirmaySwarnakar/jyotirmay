@@ -92,6 +92,19 @@
             color: white;
         }
 
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-align: center; 
+        }
+
+        .hero p {
+            font-size: 20px;
+            text-align: center; 
+            margin-top: 10px; 
+            line-height: 1.5; 
+        }
+
         .profile-container {
             position: relative;
             width: 250px;
@@ -208,8 +221,9 @@
 
         .portfolio-thumbnail {
             width: 100%;
-            height: 250px;
-            object-fit: cover;
+            height: auto; 
+            object-fit: contain;
+            max-height: 250px; 
         }
 
         .portfolio-info {
@@ -626,7 +640,7 @@
         <h2 class="section-title">My Portfolio</h2>
         <div class="portfolio-grid">
             <div class="portfolio-item">
-                <img src="assets/images/tinbox.png" alt="Project 1" class="portfolio-thumbnail">
+                <img src="assets/images/tinbox.webp" alt="Project 1" class="portfolio-thumbnail">
                 <div class="portfolio-info">
                     <h3>T-inbox</h3>
                     <p>Free and easiest way to generate temporary email address and receive mails to keep your mail address spam free</p>
@@ -634,14 +648,14 @@
                 </div>
             </div>
             <div class="portfolio-item">
-                <img src="assets/images/img.png" alt="Project 2" class="portfolio-thumbnail">
+                <img src="assets/images/cmage.webp" alt="Project 2" class="portfolio-thumbnail">
                 <div class="portfolio-info"><h3>cmage</h3>
                     <p>Now you can change image formats or compress them at one place that too for free and easily.</p>
                     <a href="https://Jyotirmayswarnakar.github.io/jyotirmay/cmage" target="_blank" class="visit-btn">Visit Project</a>
                 </div>
             </div>
             <div class="portfolio-item">
-                <img src="assets/images/transcode.png" alt="Project 3" class="portfolio-thumbnail">
+                <img src="assets/images/transcode.webp" alt="Project 3" class="portfolio-thumbnail">
                 <div class="portfolio-info">
                     <h3>Transcode</h3>
                     <p>Now share information secretely in the form of QR, Morse code, Encrypted text for free</p>
@@ -649,7 +663,7 @@
                 </div>
             </div>
             <div class="portfolio-item">
-                <img src="assets/images/detune.png" alt="Project 3" class="portfolio-thumbnail">
+                <img src="assets/images/detune.webp" alt="Project 3" class="portfolio-thumbnail">
                 <div class="portfolio-info">
                     <h3>Detune</h3>
                     <p>Extract audio from video and convert it to mp3 or remove audio from video for free</p>
@@ -657,7 +671,7 @@
                 </div>
             </div>
             <div class="portfolio-item">
-                <img src="assets/images/Write.png" alt="Project 3" class="portfolio-thumbnail">
+                <img src="assets/images/write.webp" alt="Project 3" class="portfolio-thumbnail">
                 <div class="portfolio-info">
                     <h3>Write Text Editor</h3>
                     <p>Free Text Editor with extra features like words counter and random text generator.</p>
